@@ -4,22 +4,31 @@
 #include <math.h>
 void main()
 {
-    int rem, temp, n, digits, i = 0, sum = 0;
+    int rem, temp, n, digits = 0, i = 0, sum = 0;
     printf("Enter n : ");
     scanf("%d", &n);
+
     temp = n;
-    printf("Enter number of digits : ");
-    scanf("%d", &digits);
-    while (i <= digits)
+    while (n != 0)
+    {
+        n = n / 10;
+        digits++;
+    }
+
+    n = temp;
+    while (n != 0)
     {
         rem = n % 10;
         sum = sum + pow(rem, digits);
         n = n / 10;
         i = i + 1;
     }
+
     if (temp == sum)
-    
+
         printf("%d is Armstrong Number", sum);
-    
-    printf("%d is not Armstrong Number", temp);
+    else
+    {
+        printf("%d is not Armstrong Number", temp);
+    }
 }

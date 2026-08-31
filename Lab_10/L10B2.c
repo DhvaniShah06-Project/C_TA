@@ -1,21 +1,25 @@
-//prime using flag variable
+// prime using flag variable
 #include <stdio.h>
-void main(){
-    int n,flag=0,i=1;
+void main()
+{
+    int n, flag = 0, i = 2;
     printf("Enter n : ");
-    scanf("%d",&n);
-    while(n>=i){
-    if(n%i==0){
-    flag=flag+1;
-    i=i+1;
+    scanf("%d", &n);
+    while (i <= n / 2)
+    {
+        if (n % i == 0)
+        {
+            flag = 1;
+            i = i + 1;
+        }
+        i = i + 1;
     }
-    i=i+1;
+    if (flag == 0)
+    {
+        printf("Prime Number");
     }
-    if(flag==2){
-    printf("Prime Number");
-    }
-   else if(flag>2){
-    printf("Not Prime Number");
+    else
+    {
+        printf("Not Prime Number");
     }
 }
-    
