@@ -9,14 +9,11 @@ void main()
     {
         if (n % i == 0)
         {
-            i = i + 1;
-            count = count + 1;
+            i++;
+            count++;
             break;
         }
-        else
-        {
-            i = i + 1;
-        }
+        i++;
     }
     if (count == 0)
     {
