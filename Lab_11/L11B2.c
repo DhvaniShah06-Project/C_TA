@@ -5,10 +5,13 @@ void main()
     int n, num, c0 = 0, c1 = 0, c2 = 0, c3 = 0, c4 = 0, c5 = 0, c6 = 0, c7 = 0, c8 = 0, c9 = 0;
     printf("Enter number : ");
     scanf("%d", &n);
+    /*can do code with number n also for(;n>0;n/=10) but this is not a good practice as it will change the value
+     of n and we may need it later
+     in the program so better to use another variable i to store the value of n and use it in the loop*/
     for (int i = n; i > 0; i /= 10)
     {
         num = i % 10;
-        switch (num)
+        switch (num) // can also use switch(i%10) no need for num but this is a good practice to make code more readable
         {
         case 0:
             c0++;
