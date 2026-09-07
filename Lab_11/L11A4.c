@@ -8,7 +8,6 @@ void main()
     for (i = 0; i < p; i++)
     {
         res = b * res;
-        i = i + 1;
     }
     printf("%d^%d : %d", b, p, res);
 }

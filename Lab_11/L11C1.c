@@ -3,7 +3,7 @@
 #include <math.h>
 void main()
 {
-    int n, i = 1, ld, temp, c, b, rev;
+    int n, i = 1, ld,fd, temp, c, b, rev;
     printf("Enter n : ");
     scanf("%d", &n);
     temp = n;
