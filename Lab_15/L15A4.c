@@ -11,6 +11,7 @@ void main()
         printf("Enter Number : ");
         scanf("%d", &a[i]);
     }
+    //optional can skip m m is only for how many numbers from array are to be searched.
     printf("How many Numbers to be searched : ");
     scanf("%d", &m);
     for (i = 0; i < m; i++)
