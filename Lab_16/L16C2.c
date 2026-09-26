@@ -10,29 +10,21 @@ void main()
     {
         for (j = 0; j < col; j++)
         {
-            if (i > j)
-            {
-                a[i][j] = 0;
-            }
-            else if (i < j || i == j)
-            {
+           
+            
+            
                 printf("Enter Number : ");
                 scanf("%d", &a[i][j]);
-            }
+            
         }
     }
     for (i = 0; i < row; i++)
     {
-        for (j = 0; j < col; j++)
+        for (j = i; j < col; j++)
         {
-            if (i > j)
-            {
+            
                 printf("%d", a[i][j]);
-            }
-            else if (i < j || i == j)
-            {
-                printf("%d", a[i][j]);
-            }
+           
         }
         printf("\n");
     }
