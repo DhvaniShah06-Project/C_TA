@@ -1,9 +1,10 @@
-//calculate simple interest
+// calculate simple interest
 #include <stdio.h>
 
-float Int(float, float, float);
+float Int(float, float, float); // function prototype
 
-int main() {
+int main()
+{
     float p, r, t;
     printf("Enter Principal Amount : ");
     scanf("%f", &p);
@@ -12,12 +13,14 @@ int main() {
     printf("Enter Time : ");
     scanf("%f", &t);
 
-    float Result = Int(p, r, t);
+    float Result = Int(p, r, t); // function call
     printf("Simple Interset : %.3f", Result);
     return 0;
 }
 
-float Int(float p, float r, float t) {
+// function definition
+float Int(float p, float r, float t)
+{
     float Simple = (p * r * t) / 100;
     return Simple;
 }

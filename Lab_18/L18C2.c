@@ -1,6 +1,8 @@
 // converts amount to words
 #include <stdio.h>
 #include <math.h>
+
+// Function prototypes
 void convert(int n, int digits);
 void main()
 {
@@ -9,8 +11,10 @@ void main()
     scanf("%d", &n);
     printf("Enter Digits : ");
     scanf("%d", &digits);
-    convert(n, digits);
+    convert(n, digits); // function call
 }
+
+// function definition
 void convert(int n, int digits)
 {
     int i, rem, j, temp, size = 0, k;

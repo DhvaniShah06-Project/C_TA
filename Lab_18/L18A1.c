@@ -1,21 +1,22 @@
-//add two numbers using functions
+// add two numbers using functions
 #include <stdio.h>
 
+// function prototype
 int add(int, int);
-
-int main() {
+void main()
+{
     int a, b;
     printf("Enter an integer a : ");
     scanf("%d", &a);
     printf("Enter an integer b : ");
     scanf("%d", &b);
-
-    int result = add(a, b);
+    int result = add(a, b); // function call
     printf("Sum : %d", result);
-    return 0;
 }
 
-int add(int a, int b) {
+// function definition
+int add(int a, int b)
+{
     int z = a + b;
     return z;
 }

@@ -3,7 +3,8 @@
 #include <stdio.h>
 #include <string.h>
 
-static int lengthOfString(char *s) {
+// Returns the length of the string
+int lengthOfString(char *s) {
     int len = 0;
     while (s[len] != '\0') {
         len++;
@@ -11,28 +12,31 @@ static int lengthOfString(char *s) {
     return len;
 }
 
-static void copyString(char *dest, char *src) {
+// Copies string s2 into s1
+void copyString(char *s1, char *s2) {
     int i = 0;
-    while (src[i] != '\0') {
-        dest[i] = src[i];
+    while (s2[i] != '\0') {
+        s1[i] = s2[i];
         i++;
     }
-    dest[i] = '\0';
+    s1[i] = '\0';
 }
 
-static void concatenateString(char *dest, char *src) {
+// Appends string s2 to the end of s1
+void concatenateString(char *s1, char *s2) {
     int i = 0, j = 0;
-    while (dest[i] != '\0') {
+    while (s1[i] != '\0') {
         i++;
     }
-    while (src[j] != '\0') {
-        dest[i] = src[j];
+    while (s2[j] != '\0') {
+        s1[i] = s2[j];
         i++;
         j++;
     }
-    dest[i] = '\0';
+    s1[i] = '\0';
 }
 
+// Compares two strings lexicographically
 static int compareString(char *s1, char *s2) {
     int i = 0;
     while (s1[i] != '\0' && s2[i] != '\0') {

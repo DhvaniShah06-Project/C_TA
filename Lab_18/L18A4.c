@@ -1,9 +1,10 @@
-//returns maximum from 3 float numbers
+// returns maximum from 3 float numbers
 #include <stdio.h>
 
-float max(float, float, float);
+float max(float, float, float); // function prototype
 
-int main() {
+int main()
+{
     float a, b, c;
     printf("Enter an integer a : ");
     scanf("%f", &a);
@@ -12,12 +13,14 @@ int main() {
     printf("Enter an integer c : ");
     scanf("%f", &c);
 
-    float result = max(a, b, c);
+    float result = max(a, b, c); // function call
     printf("Maximum : %.1f", result);
     return 0;
 }
 
-float max(float a, float b, float c) {
+// function definition
+float max(float a, float b, float c)
+{
     float great = (a > b) ? ((a > c) ? a : c) : ((b > c) ? b : c);
     return great;
 }

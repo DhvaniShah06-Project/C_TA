@@ -1,10 +1,12 @@
-//maximum and minimum between two numbers
+// maximum and minimum between two numbers
 #include <stdio.h>
 
+// function declaration
 int max(int, int);
 int min(int, int);
 
-int main() {
+int main()
+{
     int a, b;
     printf("Enter an integer a : ");
     scanf("%d", &a);
@@ -12,19 +14,22 @@ int main() {
     scanf("%d", &b);
 
     int maxno = max(a, b);
-    printf("Maximum : %d", maxno);
+    printf("Maximum : %d", maxno); // function call
 
     int minno = min(a, b);
-    printf("\nMinimum : %d", minno);
+    printf("\nMinimum : %d", minno); // function call
     return 0;
 }
 
-int max(int a, int b) {
+// function definition
+int max(int a, int b)
+{
     int great = (a > b) ? a : b;
     return great;
 }
 
-int min(int a, int b) {
+int min(int a, int b)
+{
     int small = (a > b) ? b : a;
     return small;
 }

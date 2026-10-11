@@ -229,3 +229,250 @@ Function program =
 - define later
 
 This is the basic rule for all user-defined function problems in C.
+
+# C Functions - Easy Notes
+
+## 14) Four Types of Functions in C
+
+Functions are classified into four types based on **arguments (values passed to a function)** and **return value (value sent back by a function)**.
+
+### Type 1: No Arguments and No Return Value
+
+- The function does not receive any values.
+- The function does not return any value.
+- Use `void` as the return type.
+
+```c
+#include <stdio.h>
+
+void add() {
+    int a = 5, b = 10;
+    printf("Sum = %d", a + b);
+}
+
+int main() {
+    add();
+    return 0;
+}
+```
+
+**Output:**
+```text
+Sum = 15
+```
+
+**Explanation:** The function receives no arguments and prints the result itself.
+
+### Type 2: Arguments but No Return Value
+
+- The function receives values from `main()`.
+- The function does not return any value.
+- Use `void` as the return type.
+
+```c
+#include <stdio.h>
+
+void add(int a, int b) {
+    printf("Sum = %d", a + b);
+}
+
+int main() {
+    add(5, 10);
+    return 0;
+}
+```
+
+**Output:**
+```text
+Sum = 15
+```
+
+**Explanation:** The values `5` and `10` are passed to the function, which prints their sum.
+
+### Type 3: No Arguments but Returns a Value
+
+- The function does not receive any values.
+- The function returns a result to `main()`.
+- Use a suitable return type, such as `int`.
+
+```c
+#include <stdio.h>
+
+int add() {
+    int a = 5, b = 10;
+    return a + b;
+}
+
+int main() {
+    int result = add();
+    printf("Sum = %d", result);
+    return 0;
+}
+```
+
+**Output:**
+```text
+Sum = 15
+```
+
+**Explanation:** The function calculates the sum and returns it to `main()`.
+
+### Type 4: Arguments and Returns a Value
+
+- The function receives values from `main()` or any other functions.
+- The function returns the result to `main()` or the function from which it was called..
+- Use a suitable return type, such as `int`.
+
+
+
+---
+
+## 15) Difference Between the Four Types
+
+| Type | Arguments | Return value |
+|---|---|---|
+| Type 1 | No | No |
+| Type 2 | Yes | No |
+| Type 3 | No | Yes |
+| Type 4 | Yes | Yes |
+
+### Easy Trick to Remember
+
+1. **No value in, no value out** → Type 1
+2. **Value in, no value out** → Type 2
+3. **No value in, value out** → Type 3
+4. **Value in, value out** → Type 4
+
+Here, *value in* means arguments are passed to the function, and *value out* means a result is returned using `return`.
+
+---
+
+## 16) Basic Structure of a Function in C
+
+A function generally has three main parts:
+
+1. **Declaration (Prototype):** Tells the compiler the function name, return type, and parameters.
+2. **Function Call:** Executes the function.
+3. **Definition:** Contains the actual code of the function.
+
+### Simple Structure
+
+```c
+#include <stdio.h>
+
+// 1. Function declaration
+int add(int, int);
+
+int main() {
+    // 2. Function call
+    int result = add(5, 10);
+
+    printf("Sum = %d", result);
+
+    return 0;
+}
+
+// 3. Function definition
+int add(int a, int b) {
+    return a + b;
+}
+```
+
+**Output:**
+```text
+Sum = 15
+```
+
+### Meaning of Each Part
+
+**1. Declaration — written before `main()`**
+
+```c
+int add(int, int);
+```
+
+It tells the compiler that `add()` accepts two integers and returns an integer.
+
+**2. Call — written inside `main()`**
+
+```c
+int result = add(5, 10);
+```
+
+It calls the function and stores the returned value in `result`.
+
+**3. Definition — written after `main()`**
+
+```c
+int add(int a, int b) {
+    return a + b;
+}
+```
+
+It contains the actual logic for calculating the sum.
+
+---
+
+## 17) General Syntax of a Function
+
+### Function Declaration
+
+```c
+return_type function_name(parameter_types);
+```
+
+### Function Call
+
+```c
+function_name(arguments);
+```
+
+If the function returns a value:
+
+```c
+variable = function_name(arguments);
+```
+
+### Function Definition
+
+```c
+return_type function_name(parameters) {
+    // Statements
+    return value;
+}
+```
+
+**Important:** If the return type is `void`, the function does not return a value. The declaration must appear before the function is called if the definition comes later.
+
+---
+
+## 18) Can We Define a Function Before `main()`?
+
+Yes! In C, you can define the function before `main()`. In that case, you can call it without writing a separate declaration first.
+
+```c
+#include <stdio.h>
+
+int add(int a, int b) {
+    return a + b;
+}
+
+int main() {
+    printf("Sum = %d", add(5, 10));
+    return 0;
+}
+```
+
+**Remember:** A separate function declaration is not necessary when the complete function definition already appears before its first call.
+
+---
+
+## 19) Final Revision
+
+- `void` means the function does not return a value.
+- `int`, `float`, and other types specify the kind of value returned.
+- Parameters receive values inside the function.
+- Arguments are the values supplied when calling the function.
+- `return` sends a result back to the caller.
+- A function can be declared before `main()` and defined after it.
+- A function defined before `main()` can be called directly without a separate prototype.
