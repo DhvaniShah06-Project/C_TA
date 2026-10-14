@@ -1,4 +1,5 @@
 #include "Dhvanistr.h"
-void main(){
+void main()
+{
     Swap();
 }
