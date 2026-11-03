@@ -27,5 +27,5 @@ void main()
       a = fgetc(fp);
    }
    fclose(fp);
-   printf("Space %d New Line : %d Tabs : %d Characters : %d", cs, cn, ct, cc);
+   printf("Space %d\n New Line : %d\n Tabs : %d\n Characters : %d", cs, cn, ct, cc);
 }
