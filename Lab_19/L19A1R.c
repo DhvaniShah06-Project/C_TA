@@ -7,7 +7,7 @@ void main()
     printf("Enter n : ");
     scanf("%d", &n);
     int res = fact(n);
-    printf("%d", res);
+    printf("%d", res);   
 }
 int fact(int n)
 {
@@ -15,7 +15,7 @@ int fact(int n)
     {
         return 1;
     }
-    else
+    else   
     {
         return n * fact(n - 1);
     }
