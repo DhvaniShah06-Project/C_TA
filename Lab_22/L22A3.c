@@ -2,14 +2,16 @@
 #include <stdio.h>
 void main()
 {
-    FILE *fp;
-    int b;
+    FILE *fp,*fp1;
     fp = fopen("../Lab_4/L4A1.c", "r");
-    fscanf(fp, "%s", &b);
-    fprintf(fp, "%s", b);
-
+    fp1 = fopen("demo.txt","a");
     char a = fgetc(fp);
+    fputc(a, fp1);
+    fscanf(fp, "%c", &a);
+    fprintf(fp1, "%c", a);
 
-    fseek(fp, 0, 2);
+
+    int c = fseek(fp, -2, 2);
+    printf("The value of c is : %d\n", c);
     rewind(fp);
 }
