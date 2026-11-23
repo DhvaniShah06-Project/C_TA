@@ -1,119 +1,108 @@
-//
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
-struct Student {
-    char name[50];
-    int roll_no;
-    int backlog;
+struct StudentRecord {
+    int roll, backlog;
+    char n[100];
 };
 
-int parseAndReadData(struct Student s1[], const char *filename);
-void modifyBacklogs(struct Student s1[], int count, int target_roll, int new_backlog);
-void saveAndVerifyData(struct Student s1[], int count, const char *filename);
+// Function declarations (prototypes)
+int readStudents(struct StudentRecord s[]);
+void countHighBacklogs(struct StudentRecord s[], int count);
+void modifyBacklog(struct StudentRecord s[], int count, int target_roll);
+void saveAndVerify(struct StudentRecord s[], int count);
 
 int main() {
-    struct Student students[100]; 
-    int count = 0;
-    const char *filename = "student.txt";
-    
-    
-    int target_roll = 5; 
-    int new_backlog = 3;
+    // Local structure array (NOT global)
+    struct StudentRecord students[100];
+    int count, target_roll;
 
-    //  PART 23-A 
-    count = parseAndReadData(students, filename);
+    // 1. Read existing students from student.txt
+    count = readStudents(students);
     if (count == 0) {
-        printf("Error: No valid student structures could be read from the file.\n");
+        printf("No records found in student.txt!\n");
         return 1;
     }
 
-    //  PART 23-B 
-   
-    modifyBacklogs(students, count, target_roll, new_backlog);
+    // 2. Part 23-A: Count students with backlog > 5
+    countHighBacklogs(students, count);
 
-   
-    saveAndVerifyData(students, count, filename);
+    // 3. Part 23-B: Modify 1 student's backlog to 3, save, and verify
+    printf("\nEnter Roll No of student to change backlog to 3: ");
+    scanf("%d", &target_roll);
+
+    modifyBacklog(students, count, target_roll);
+    saveAndVerify(students, count);
 
     return 0;
 }
 
-// PART 23-A:
-int parseAndReadData(struct Student s1[], const char *filename) {
-    FILE *fp = fopen(filename, "r");
+//  Read data from existing student.txt
+int readStudents(struct StudentRecord s[]) {
+    FILE *fp = fopen("student.txt", "r");
     if (fp == NULL) {
-        printf("Error: Could not open file '%s' for reading.\n", filename);
+        printf("Error opening student.txt!\n");
         return 0;
     }
 
     int count = 0;
-    char token[100];
+    char skip1[20], skip2[20]; 
 
-    while (fscanf(fp, "%99s", token) != EOF) {
-        if (strcmp(token, "Name") == 0) {
-            if (fscanf(fp, "%49s", s1[count].name) == 1) {
-                
-                
-                fscanf(fp, "%*s %*s %d", &s1[count].roll_no);
-                
-                
-                fscanf(fp, "%*s %d", &s1[count].backlog);
-                
-               
-                if (s1[count].roll_no > 0 && s1[count].backlog >= 0) {
-                    count++;
-                }
-            }
-        }
+    // Reads "Name:" into skip1, then full name into s[count].n
+    while (fscanf(fp, "%s %[^\n]", skip1, s[count].n) == 2) {
+        fscanf(fp, "%s %s %d", skip1, skip2, &s[count].roll); // Skips "Roll" "No:"
+        fscanf(fp, "%s %d", skip1, &s[count].backlog);        // Skips "Backlog:"
+        count++;
     }
+
     fclose(fp);
-    return count; 
+    return count; // Send total count back to main()
 }
 
-// PART 23-B: MODIFICATION FUNCTION
-void modifyBacklogs(struct Student s1[], int count, int target_roll, int new_backlog) {
+//(Part 23-A): Count backlogs > 5
+void countHighBacklogs(struct StudentRecord s[], int count) {
+    int high = 0;
+    for (int i = 0; i < count; i++) {
+        if (s[i].backlog > 5) {
+            high++;
+        }
+    }
+    printf("Students with more than 5 backlogs: %d\n", high);
+}
+
+//  (Part 23-B): Change target student's backlog to 3
+void modifyBacklog(struct StudentRecord s[], int count, int target_roll) {
     int found = 0;
     for (int i = 0; i < count; i++) {
-        if (s1[i].roll_no == target_roll) {
-            s1[i].backlog = new_backlog; // Update the student backlog
+        if (s[i].roll == target_roll) {
+            s[i].backlog = 3;
             found = 1;
             break;
         }
     }
-
-    if (!found) {
-        printf("Notice: Student with Roll No %d not found in records.\n", target_roll);
+    if (found == 0) {
+        printf("Roll No %d not found!\n", target_roll);
     }
 }
 
-
-// PART 23-B
-void saveAndVerifyData(struct Student s1[], int count, const char *filename) {
-    FILE *fp = fopen(filename, "w");
-    if (fp == NULL) {
-        printf("Error: Could not open file for writing.\n");
-        return;
-    }
-
+// (Part 23-B): Save updated list to file & print from file
+void saveAndVerify(struct StudentRecord s[], int count) {
+    FILE *fp = fopen("student.txt", "w");
     for (int i = 0; i < count; i++) {
-        fprintf(fp, "Name %s\n", s1[i].name);
-        fprintf(fp, "Roll No %d\n", s1[i].roll_no);
-        fprintf(fp, "Backlog %d\n\n", s1[i].backlog);
+        fprintf(fp, "Name: %s\n", s[i].n);
+        fprintf(fp, "Roll No: %d\n", s[i].roll);
+        fprintf(fp, "Backlog: %d\n\n", s[i].backlog);
     }
     fclose(fp);
 
-    printf("\n=== VERIFYING CLEAN UPDATED DATA FROM FILE ===\n");
-    fp = fopen(filename, "r");
-    if (fp == NULL) {
-        printf("Error: Verification failed to open the file.\n");
-        return;
-    }
+    printf("\n--- Verifying Updated Data from File ---\n");
+    fp = fopen("student.txt", "r");
+    char skip1[20], skip2[20];
+    for (int i = 0; i < count; i++) {
+        fscanf(fp, "%s %[^\n]", skip1, s[i].n);
+        fscanf(fp, "%s %s %d", skip1, skip2, &s[i].roll);
+        fscanf(fp, "%s %d", skip1, &s[i].backlog);
 
-    char temp_name[50];
-    int temp_roll, temp_backlog;
-    while (fscanf(fp, " Name %49s Roll No %d Backlog %d", temp_name, &temp_roll, &temp_backlog) == 3) {
-        printf("Student: %-10s | Roll No: %-3d | Updated Backlogs: %d\n", temp_name, temp_roll, temp_backlog);
+        printf("Name: %s | Roll No: %d | Backlog: %d\n", s[i].n, s[i].roll, s[i].backlog);
     }
     fclose(fp);
 }

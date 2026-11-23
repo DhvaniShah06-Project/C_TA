@@ -1,95 +1,56 @@
-//Now modify the backlogs of any 1 student to 3 and store the data into file again and verify the data
-//stored into file by printing onto console
-
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
-struct Student {
-    char name[50];
-    int roll_no;
-    int backlog;
+struct StudentRecord {
+    int roll, backlog;
+    char n[100];
 };
 
 int main() {
+    struct StudentRecord s[100];
     FILE *fp;
-    struct Student s1[100];
-    int count = 0;
-    
-    int target_roll = 5; 
-    int found = 0;
+    int count = 0, i, target_roll;
+    char skip1[20], skip2[20]; // Simple variables to skip label words
 
-
+    // --- STEP 1: Read data from student.txt ---
     fp = fopen("student.txt", "r");
-    if (fp == NULL) {
-        printf("Error opening file for reading.\n");
-        return 1;
-    }
 
-    char token[100];
-    
-    while (fscanf(fp, "%99s", token) != EOF) {
-    
-        if (strcmp(token, "Name") == 0) {
-            
-            if (fscanf(fp, "%49s", s1[count].name) == 1) {
-                
-            
-                fscanf(fp, "%*s %*s %d", &s1[count].roll_no);
-                
-            
-                fscanf(fp, "%*s %d", &s1[count].backlog);
-                
-            
-                if (s1[count].roll_no > 0 && s1[count].backlog >= 0) {
-                    count++;
-                }
-            }
-        }
+
+    // Read "Name:" into skip1, then read the full name (with spaces) until Enter
+    while (fscanf(fp, "%s %[^\n]", skip1, s[count].n) == 2) {
+        fscanf(fp, "%s %s %d", skip1, skip2, &s[count].roll); // Skips "Roll" "No:"
+        fscanf(fp, "%s %d", skip1, &s[count].backlog);        // Skips "Backlog:"
+        count++;
     }
     fclose(fp);
 
-    if (count == 0) {
-        printf("No valid student structures could be extracted from your file.\n");
-        return 1;
-    }
+    // --- STEP 2: Ask which student to update & change backlog to 3 ---
+    printf("Enter Roll No of student to change backlog to 3: ");
+    scanf("%d", &target_roll);
 
-    
-    for (int i = 0; i < count; i++) {
-        if (s1[i].roll_no == target_roll) {
-            s1[i].backlog = 3;
-            found = 1;
-            break;
+    for (i = 0; i < count; i++) {
+        if (s[i].roll == target_roll) {
+            s[i].backlog = 3;
         }
     }
 
-    if (!found) {
-        printf("Target Roll No %d not found in records.\n", target_roll);
-    }
-
+    // --- STEP 3: Write updated data back into student.txt ---
     fp = fopen("student.txt", "w");
-    if (fp == NULL) {
-        printf("Error opening file for writing.\n");
-        return 1;
-    }
-
-    for (int i = 0; i < count; i++) {
-        fprintf(fp, "Name %s\n", s1[i].name);
-        fprintf(fp, "Roll No %d\n", s1[i].roll_no);
-        fprintf(fp, "Backlog %d\n\n", s1[i].backlog);
+    for (i = 0; i < count; i++) {
+        fprintf(fp, "Name: %s\n", s[i].n);
+        fprintf(fp, "Roll No: %d\n", s[i].roll);
+        fprintf(fp, "Backlog: %d\n\n", s[i].backlog);
     }
     fclose(fp);
 
-    printf("\n=== VERIFYING CLEAN UPDATED DATA FROM FILE ===\n");
+    
+    printf("\n--- Updated Data from File ---\n");
     fp = fopen("student.txt", "r");
-    if (fp == NULL) {
-        return 1;
-    }
+    for (i = 0; i < count; i++) {
+        fscanf(fp, "%s %[^\n]", skip1, s[i].n);
+        fscanf(fp, "%s %s %d", skip1, skip2, &s[i].roll);
+        fscanf(fp, "%s %d", skip1, &s[i].backlog);
 
-    char name[50];
-    int roll, backlog;
-    while (fscanf(fp, " Name %49s Roll No %d Backlog %d", name, &roll, &backlog) == 3) {
-        printf("Student: %-10s | Roll No: %-3d | Backlogs: %d\n", name, roll, backlog);
+        printf("Name: %s | Roll No: %d | Backlog: %d\n", s[i].n, s[i].roll, s[i].backlog);
     }
     fclose(fp);
 
