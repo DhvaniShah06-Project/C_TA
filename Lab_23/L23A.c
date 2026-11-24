@@ -14,7 +14,7 @@ int main() {
     struct StudentRecord s1[n];
     FILE *fp;
     
-    fp = fopen("student.txt", "a");
+    fp = fopen("student.txt", "w");
     if (fp == NULL) {
         printf("Error opening file!\n");
         return 1;
@@ -35,15 +35,28 @@ int main() {
         scanf("%d", &s1[i].backlog);
         fprintf(fp, "Backlog: %d\n\n", s1[i].backlog);
     }
+    fclose(fp);
 
-    fclose(fp); 
+   fp = fopen("student.txt", "r");
+    if (fp == NULL) {
+        printf("Error opening file for reading!\n");
+        return 1;
+    }
 
-    for (i = 0; i < n; i++) {
-        if (s1[i].backlog > 5) {
+    struct StudentRecord temp;
+    printf("\nStudents with more than 5 backlogs:\n");
+
+    while (fscanf(fp, " Name: %[^\n] Roll No: %d Backlog: %d",
+                  temp.n, &temp.roll, &temp.backlog) == 3) {
+        if (temp.backlog > 5) {
+            printf("Roll No: %d (Name: %s, Backlogs: %d)\n",
+                   temp.roll, temp.n, temp.backlog);
             count++;
         }
     }
 
-    printf("Students with more than 5 backlogs: %d\n", count);
+    fclose(fp);
+
+    printf("\nTotal students with more than 5 backlogs: %d\n", count);
     return 0;
 }
