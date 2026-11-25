@@ -27,7 +27,7 @@ char* removeStars(char* s) {
         
             if (j > 0) {
                 j--;
-            }
+            } 
         } else {
             ans[j] = s[i];
             j++;
@@ -39,16 +39,22 @@ char* removeStars(char* s) {
 }
 
 int main() {
-    char input1[] = "leet**cod*e";
-    char input2[] = "erase*****";
+    //for example, you can test the function with the following inputs:
+    // char input1[] = "leet**cod*e";
+    // char input2[] = "erase*****";
 
-    char* result1 = removeStars(input1);
-    printf("Input: %s -> Output: %s\n", input1, result1);
-    free(result1);
+    // char* result1 = removeStars(input1);
+    // printf("Input: %s -> Output: %s\n", input1, result1);
+    // free(result1);
 
-    char* result2 = removeStars(input2);
-    printf("Input: %s -> Output: %s\n", input2, result2);
-    free(result2); 
+    // char* result2 = removeStars(input2);
+    // printf("Input: %s -> Output: %s\n", input2, result2);
+    // free(result2); 
+    char input[100];
+    scanf("%s", input);
+    char* result = removeStars(input);
+    printf("Input: %s -> Output: %s\n", input, result);
+    free(result);
 
     return 0;
 }
